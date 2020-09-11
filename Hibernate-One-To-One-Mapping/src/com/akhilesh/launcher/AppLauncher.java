@@ -1,8 +1,9 @@
 package com.akhilesh.launcher;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 
 import com.akhilesh.Utility.HibernateUtility;
 import com.akhilesh.entity.Instructor;
@@ -19,24 +20,25 @@ public class AppLauncher {
 		try {
 			System.out.println("Creating a new Instructor Object object");
 			
-			/*
-			Instructor instructor = new Instructor("Akhilesh", "Gupta", "akhi@gmail.com");
-			 InstructorDetail instructorDetail = new InstructorDetail("TechMind",
+			
+			Instructor instructor1 = new Instructor("Akhilesh", "Gupta", "akhi@gmail.com");
+			 InstructorDetail instructorDetail1 = new InstructorDetail("TechMind",
 			 "Learning");
-			 */
+			 
 			
 			
 			Instructor instructor = new Instructor("Amit1", "Gupta1", "amit@gmail.com");
 			InstructorDetail instructorDetail = new InstructorDetail("TechinalMind", "Learning");
 
 			instructor.setInstructorDetail(instructorDetail);
-
+			instructor1.setInstructorDetail(instructorDetail1);
 			// start a transaction
 			session.beginTransaction();
 
 			// save the student object
 			System.out.println("Saving the Instrctor");
 			session.save(instructor);
+			session.save(instructor1);
 
 			// commit the transaction
 			session.getTransaction().commit();
@@ -81,14 +83,23 @@ public class AppLauncher {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}finally {
-			
+			//handle connection leak issue
+			session.close();
+			sessionFactory.close();
 		}
 	}
+	
+	public static List<Instructor> findAllInstructorsWithJpql() {
+		session.beginTransaction();
+	    return session.createQuery("SELECT a FROM Instructor a", Instructor.class).getResultList();      
+	}
+	
 	public static void main(String[] args) {
 		//insertRecord();
 	  //deleteRecord(3);
 		//getDetails(new InstructorDetail(), 1);
 		getDetails(new Instructor(), 100);
+	  //System.out.println(findAllInstructorsWithJpql());
 	}
 
 }
