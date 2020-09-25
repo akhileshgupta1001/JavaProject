@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Implementation-Title: Spring boot demo project
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: Akhilesh
+Implementation-Vendor-Id: com
+Build-Jdk: 1.8.0_111
+Implementation-URL: https://spring.io/projects/spring-boot/akhilesh
+Created-By: Maven Integration for Eclipse
+
